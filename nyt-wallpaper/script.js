@@ -7,8 +7,17 @@ const tickerContent = document.getElementById("tickerContent");
 const backgroundImage = document.getElementById("backgroundImage");
 const imageInput = document.getElementById("imageInput");
 
-let tickerX = 0;
-let tickerWidth = 0;
+// Exit button
+let exitBtn = document.getElementById("exitBtn");
+if (!exitBtn) {
+  exitBtn = document.createElement("button");
+  exitBtn.id = "exitBtn";
+  exitBtn.textContent = "X";
+  document.body.appendChild(exitBtn);
+}
+exitBtn.onclick = () => {
+  document.body.classList.remove("wallpaper-mode");
+};
 
 /* ===================================== */
 /* ========== IMAGE PERSISTENCE ========= */
@@ -18,6 +27,7 @@ let tickerWidth = 0;
 const savedImage = localStorage.getItem("nytWallpaperImage");
 if (savedImage) {
   backgroundImage.src = savedImage;
+  document.body.classList.add("wallpaper-mode"); // enter full-screen wallpaper mode
 }
 
 // Save image when user uploads one
@@ -30,8 +40,9 @@ imageInput.onchange = () => {
     const dataUrl = reader.result;
 
     backgroundImage.src = dataUrl;
+    document.body.classList.add("wallpaper-mode"); // full-screen
 
-    // 🔒 Persist image across tabs/reloads
+    // Persist image across reloads/tabs
     localStorage.setItem("nytWallpaperImage", dataUrl);
   };
   reader.readAsDataURL(file);
@@ -77,6 +88,9 @@ loadNews();
 /* ===================================== */
 /* ============ ANIMATION LOOP ========== */
 /* ===================================== */
+
+let tickerX = 0;
+let tickerWidth = 0;
 
 function animate() {
   tickerX -= 0.7;
