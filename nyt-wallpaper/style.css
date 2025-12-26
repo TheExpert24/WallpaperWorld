@@ -36,8 +36,7 @@ body {
   max-height: 100%;
   transform: translate(-50%, -50%);
   z-index: 1;
-
-  pointer-events: none; /* background shouldn’t block clicks */
+  pointer-events: none;
 }
 
 /* ---------------- TICKER BAR ---------------- */
@@ -48,8 +47,8 @@ body {
   height: 48px;
   background: rgba(0, 0, 0, 0.75);
   overflow: hidden;
-  z-index: 9999; /* higher z-index so it’s above background */
-  pointer-events: auto; /* clickable */
+  z-index: 9999;
+  pointer-events: auto;
 }
 
 /* ---------------- TICKER CONTENT ---------------- */
@@ -59,8 +58,8 @@ body {
   display: flex;
   align-items: center;
   height: 100%;
-  z-index: 10000; /* ensure links are above everything */
-  pointer-events: auto; /* clickable */
+  z-index: 10000;
+  pointer-events: auto;
 }
 
 /* ---------------- HEADLINES ---------------- */
@@ -76,4 +75,36 @@ body {
 .headline:hover {
   text-decoration: underline;
   color: #ddd;
+}
+
+/* ---------------- EXIT BUTTON ---------------- */
+#exitBtn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 20000;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  border: none;
+  font-size: 18px;
+  padding: 6px 10px;
+  cursor: pointer;
+  display: none;
+}
+
+/* ---------------- WALLPAPER MODE ---------------- */
+body.wallpaper-mode h1,
+body.wallpaper-mode .controls {
+  display: none;
+}
+
+body.wallpaper-mode #canvas {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border: none;
+}
+
+body.wallpaper-mode #exitBtn {
+  display: block;
 }
