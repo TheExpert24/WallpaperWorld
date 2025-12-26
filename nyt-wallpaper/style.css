@@ -1,12 +1,7 @@
-/* ---------------- ROOT ---------------- */
-:root {
-  color-scheme: light dark; 
-}
-
 /* ---------------- BODY ---------------- */
 body {
-  background-color: transparent;
-  color: inherit;
+  background-color: #111;
+  color: white;
   font-family: 'Times New Roman', Times, serif, sans-serif;
   text-align: center;
   margin: 0;
@@ -102,17 +97,8 @@ body.wallpaper-mode #exitBtn {
   display: block;
 }
 
-/* ================================================= */
-/* =========== SYSTEM COLOR SCHEME LOGIC ============ */
-/* ================================================= */
 
-/* 🌙 SYSTEM DARK MODE → DARK OVERLAY + WHITE TEXT */
 @media (prefers-color-scheme: dark) {
-  body {
-    background-color: #111;
-    color: white;
-  }
-
   #ticker {
     background: rgba(0, 0, 0, 0.75);
   }
@@ -131,15 +117,9 @@ body.wallpaper-mode #exitBtn {
   }
 }
 
-/* ☀️ SYSTEM LIGHT MODE → LIGHT OVERLAY + BLACK TEXT */
 @media (prefers-color-scheme: light) {
-  body {
-    background-color: #f5f5f5;
-    color: black;
-  }
-
   #ticker {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.8);
   }
 
   .headline {
@@ -151,7 +131,7 @@ body.wallpaper-mode #exitBtn {
   }
 
   #exitBtn {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.75);
     color: black;
   }
 }
