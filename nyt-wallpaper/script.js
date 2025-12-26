@@ -1,13 +1,47 @@
 const NYT_API_KEY = "";
 const NYT_URL =
-  "https://api.nytimes.com/svc/news/v3/content/all/all.json?api-key=" + NYT_API_KEY;
+  "https://api.nytimes.com/svc/mostpopular/v2/viewed/7.json?api-key=" + NYT_API_KEY;
 
 const canvas = document.getElementById("canvas");
 const tickerContent = document.getElementById("tickerContent");
 const backgroundImage = document.getElementById("backgroundImage");
 const imageInput = document.getElementById("imageInput");
 
-// Exit button
+// ================= GOOGLE LOGO =================
+let googleLogo = document.getElementById("googleLogo");
+if (!googleLogo) {
+  googleLogo = document.createElement("img");
+  googleLogo.id = "googleLogo";
+  googleLogo.src = "google-logo.png";
+  googleLogo.style.display = "none";
+  googleLogo.style.opacity = 0;
+  canvas.appendChild(googleLogo);
+}
+
+// ================= GOOGLE SEARCH =================
+let googleSearch = document.getElementById("googleSearch");
+if (!googleSearch) {
+  googleSearch = document.createElement("input");
+  googleSearch.id = "googleSearch";
+  googleSearch.type = "text";
+  googleSearch.placeholder = "Search Google";
+  googleSearch.style.display = "none";
+  canvas.appendChild(googleSearch);
+
+  googleSearch.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const query = encodeURIComponent(googleSearch.value.trim());
+      if (query) {
+        window.open(
+          `https://www.google.com/search?q=${query}`,
+          "_blank"
+        );
+      }
+    }
+  });
+}
+
+// ================= EXIT BUTTON =================
 let exitBtn = document.getElementById("exitBtn");
 if (!exitBtn) {
   exitBtn = document.createElement("button");
@@ -15,22 +49,30 @@ if (!exitBtn) {
   exitBtn.textContent = "X";
   document.body.appendChild(exitBtn);
 }
+
 exitBtn.onclick = () => {
   document.body.classList.remove("wallpaper-mode");
+  googleLogo.style.display = "none";
+  googleLogo.style.opacity = 0;
+  googleSearch.style.display = "none";
 };
 
-/* ===================================== */
-/* ========== IMAGE PERSISTENCE ========= */
-/* ===================================== */
+// ================= WALLPAPER =================
+function setWallpaper(dataUrl) {
+  backgroundImage.src = dataUrl;
+  document.body.classList.add("wallpaper-mode");
 
-// Restore saved image on load
-const savedImage = localStorage.getItem("nytWallpaperImage");
-if (savedImage) {
-  backgroundImage.src = savedImage;
-  document.body.classList.add("wallpaper-mode"); // enter full-screen wallpaper mode
+  googleLogo.style.display = "block";
+  googleLogo.style.opacity = 1;
+
+  googleSearch.style.display = "block";
 }
 
-// Save image when user uploads one
+// Restore saved image
+const savedImage = localStorage.getItem("nytWallpaperImage");
+if (savedImage) setWallpaper(savedImage);
+
+// Image upload
 imageInput.onchange = () => {
   const file = imageInput.files[0];
   if (!file) return;
@@ -38,19 +80,14 @@ imageInput.onchange = () => {
   const reader = new FileReader();
   reader.onload = () => {
     const dataUrl = reader.result;
-
-    backgroundImage.src = dataUrl;
-    document.body.classList.add("wallpaper-mode"); // full-screen
-
-    // Persist image across reloads/tabs
+    setWallpaper(dataUrl);
     localStorage.setItem("nytWallpaperImage", dataUrl);
   };
   reader.readAsDataURL(file);
 };
 
-/* ===================================== */
-/* ============== LOAD NEWS ============= */
-/* ===================================== */
+// ================= LOAD MOST INTERESTING NEWS =================
+let headlines = [];
 
 async function loadNews() {
   try {
@@ -58,20 +95,20 @@ async function loadNews() {
     const data = await res.json();
 
     if (!data.results || data.results.length === 0) {
-      console.warn("No articles found.");
+      console.warn("No popular NYT articles found.");
       return;
     }
 
+    headlines = data.results;
     tickerContent.innerHTML = "";
 
-    data.results.slice(0, 6).forEach(article => {
+    headlines.forEach(article => {
       const link = document.createElement("a");
       link.className = "headline";
       link.textContent = article.title;
       link.href = article.url;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-
       tickerContent.appendChild(link);
     });
 
@@ -79,21 +116,18 @@ async function loadNews() {
     tickerX = canvas.offsetWidth;
 
   } catch (err) {
-    console.error("Failed to fetch NYT articles:", err);
+    console.error("Failed to load NYT popular news:", err);
   }
 }
 
 loadNews();
 
-/* ===================================== */
-/* ============ ANIMATION LOOP ========== */
-/* ===================================== */
-
+// ================= TICKER ANIMATION =================
 let tickerX = 0;
 let tickerWidth = 0;
 
 function animate() {
-  tickerX -= 0.7;
+  tickerX -= 2; 
 
   if (tickerX < -tickerWidth) {
     tickerX = canvas.offsetWidth;
