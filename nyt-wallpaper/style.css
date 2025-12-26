@@ -1,42 +1,65 @@
-/* ---------------- BODY ---------------- */
 body {
-  background-color: #111;
+  background: #111;
   color: white;
-  font-family: 'Times New Roman', Times, serif, sans-serif;
-  text-align: center;
+  font-family: "Times New Roman", Times, serif;
   margin: 0;
-  padding: 0;
-}
-
-/* ---------------- CONTROLS ---------------- */
-.controls {
-  margin: 20px auto;
   text-align: center;
 }
 
-/* ---------------- CANVAS ---------------- */
+/* CONTROLS */
+.controls {
+  margin: 20px;
+}
+
+/* CANVAS */
 #canvas {
   position: relative;
   width: 640px;
   height: 360px;
   margin: 40px auto;
   overflow: hidden;
-  border: 2px solid #333;
   background: black;
+  border: 2px solid #333;
 }
 
-/* ---------------- BACKGROUND IMAGE ---------------- */
+/* BACKGROUND */
 #backgroundImage {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 1;
-  pointer-events: none;
 }
 
-/* ---------------- TICKER BAR ---------------- */
+/* GOOGLE LOGO */
+#googleLogo {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 40%;
+  z-index: 5000;
+  display: none;
+}
+
+/* SEARCH */
+#googleSearch {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  max-width: 600px;
+  padding: 12px 18px;
+  font-size: 18px;
+  border-radius: 24px;
+  border: 1px solid #ccc;
+  outline: none;
+  z-index: 5000;
+  display: none;
+}
+
+/* TICKER */
 #ticker {
   position: absolute;
   bottom: 0;
@@ -44,43 +67,37 @@ body {
   height: 48px;
   overflow: hidden;
   z-index: 9999;
-  pointer-events: auto;
 }
 
-/* ---------------- TICKER CONTENT ---------------- */
 #tickerContent {
   position: absolute;
-  white-space: nowrap;
   display: flex;
   align-items: center;
   height: 100%;
-  z-index: 10000;
-  pointer-events: auto;
+  white-space: nowrap;
 }
 
-/* ---------------- HEADLINES ---------------- */
 .headline {
   font-size: 18px;
   font-weight: bold;
   padding-right: 50px;
   text-decoration: none;
-  cursor: pointer;
 }
 
-/* ---------------- EXIT BUTTON ---------------- */
+/* EXIT */
 #exitBtn {
   position: fixed;
   top: 15px;
   left: 15px;
-  z-index: 20000;
-  border: none;
   font-size: 18px;
   padding: 6px 10px;
+  border: none;
   cursor: pointer;
   display: none;
+  z-index: 20000;
 }
 
-/* ---------------- WALLPAPER MODE ---------------- */
+/* WALLPAPER MODE */
 body.wallpaper-mode h1,
 body.wallpaper-mode .controls {
   display: none;
@@ -97,41 +114,16 @@ body.wallpaper-mode #exitBtn {
   display: block;
 }
 
-
+/* DARK MODE */
 @media (prefers-color-scheme: dark) {
-  #ticker {
-    background: rgba(0, 0, 0, 0.75);
-  }
-
-  .headline {
-    color: white;
-  }
-
-  .headline:hover {
-    color: #ddd;
-  }
-
-  #exitBtn {
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-  }
+  #ticker { background: rgba(0,0,0,0.75); }
+  .headline { color: white; }
+  #exitBtn { background: rgba(0,0,0,0.6); color: white; }
 }
 
+/* LIGHT MODE */
 @media (prefers-color-scheme: light) {
-  #ticker {
-    background: rgba(255, 255, 255, 0.8);
-  }
-
-  .headline {
-    color: black;
-  }
-
-  .headline:hover {
-    color: #333;
-  }
-
-  #exitBtn {
-    background: rgba(255, 255, 255, 0.75);
-    color: black;
-  }
+  #ticker { background: rgba(255,255,255,0.85); }
+  .headline { color: black; }
+  #exitBtn { background: rgba(255,255,255,0.75); color: black; }
 }
