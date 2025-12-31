@@ -1,0 +1,129 @@
+body {
+  background: #111;
+  color: white;
+  font-family: "Times New Roman", Times, serif;
+  margin: 0;
+  text-align: center;
+}
+
+/* CONTROLS */
+.controls {
+  margin: 20px;
+}
+
+/* CANVAS */
+#canvas {
+  position: relative;
+  width: 640px;
+  height: 360px;
+  margin: 40px auto;
+  overflow: hidden;
+  background: black;
+  border: 2px solid #333;
+}
+
+/* BACKGROUND */
+#backgroundImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* GOOGLE LOGO */
+#googleLogo {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 40%;
+  z-index: 5000;
+  display: none;
+}
+
+/* SEARCH */
+#googleSearch {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;
+  max-width: 600px;
+  padding: 12px 18px;
+  font-size: 18px;
+  border-radius: 24px;
+  border: 1px solid #ccc;
+  outline: none;
+  z-index: 5000;
+  display: none;
+}
+
+/* TICKER */
+#ticker {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 48px;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+#tickerContent {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  white-space: nowrap;
+}
+
+.headline {
+  font-size: 18px;
+  font-weight: bold;
+  padding-right: 50px;
+  text-decoration: none;
+}
+
+/* EXIT */
+#exitBtn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 18px;
+  padding: 6px 10px;
+  border: none;
+  cursor: pointer;
+  display: none;
+  z-index: 20000;
+}
+
+/* WALLPAPER MODE */
+body.wallpaper-mode h1,
+body.wallpaper-mode .controls {
+  display: none;
+}
+
+body.wallpaper-mode #canvas {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border: none;
+}
+
+body.wallpaper-mode #exitBtn {
+  display: block;
+}
+
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+  #ticker { background: rgba(0,0,0,0.75); }
+  .headline { color: white; }
+  #exitBtn { background: rgba(0,0,0,0.6); color: white; }
+}
+
+/* LIGHT MODE */
+@media (prefers-color-scheme: light) {
+  #ticker { background: rgba(255,255,255,0.85); }
+  .headline { color: black; }
+  #exitBtn { background: rgba(255,255,255,0.75); color: black; }
+}
